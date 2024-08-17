@@ -1,0 +1,69 @@
+﻿@model WebBanQuanAo.Models.OrderViewModel
+
+@{
+    if (ViewBag.User != null)
+    {
+        var user = (WebBanQuanAo.Models.ApplicationUser)ViewBag.User;
+    }
+}
+
+@using (Ajax.BeginForm("CheckOut", "ShoppingCart", new AjaxOptions
+{
+    HttpMethod = "POST",
+    UpdateTargetId = "load_data",
+    OnComplete = "OnSuccessCO",
+    OnFailure = "Onfailure"
+}, new { @Id = "myForm" }))
+{
+    @Html.AntiForgeryToken()
+    <h3>THÔNG TIN KHÁCH HÀNG</h3>
+    if (!Request.IsAuthenticated)
+    {
+        <div class="form-group mb-3">
+            <label>Họ tên khách hàng</label>
+            <input type="text" name="CustomerName" required class="form-control" autocomplete="off" />
+        </div>
+        <div class="form-group mb-3">
+            <label>Số điện thoại</label>
+            <input type="text" name="Phone" class="form-control" autocomplete="off" />
+        </div>
+        <div class="form-group mb-3">
+            <label>Địa chỉ</label>
+            <input type="text" name="Address" class="form-control" autocomplete="off" />
+        </div>
+        <div class="form-group mb-3">
+            <label>Email</label>
+            <input type="email" name="Email" class="form-control" autocomplete="off" />
+        </div>
+    }
+    else
+    {
+        var user = (WebBanQuanAo.Models.ApplicationUser)ViewBag.User;
+        <div class="form-group mb-3">
+            <label>Họ tên khách hàng</label>
+            <input type="text" name="CustomerName" value="@user.FullName" required class="form-control" autocomplete="off" />
+        </div>
+        <div class="form-group mb-3">
+            <label>Số điện thoại</label>
+            <input type="text" name="Phone" value="@user.Phone" class="form-control" autocomplete="off" />
+        </div>
+        <div class="form-group mb-3">
+            <label>Địa chỉ</label>
+            <input type="text" name="Address" value="@user.Address" class="form-control" autocomplete="off" />
+        </div>
+        <div class="form-group mb-3">
+            <label>Email</label>
+            <input type="email" name="Email" value="@user.Email" class="form-control" autocomplete="off" />
+        </div>
+    }
+    <div class="form-group mb-3">
+        <label>Hình thức thanh toán</label>
+        <select class="form-control" name="TypePayment">
+            <option value="1" selected>Thanh toán khi nhận hàng</option>
+            <option value="2">Chuyển khoản</option>
+        </select>
+    </div>
+    <div class="form-group mb-3">
+        <button type="submit" class="btn btn-block btn-success">Đặt hàng</button>
+    </div>
+}

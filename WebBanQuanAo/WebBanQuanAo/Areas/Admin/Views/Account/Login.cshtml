@@ -1,0 +1,47 @@
+﻿@model WebBanQuanAo.Models.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="card-body login-card-body bg-dark">
+    <h3 class="login-box-msg">ĐĂNG NHẬP</h3>
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="input-group mb-3">
+            @Html.TextBoxFor(u => u.UserName, new { @class = "form-control text-light w-auto", @placeholder = "Tên tài khoản", @style = "background-color: #222831;" })
+            @Html.ValidationMessageFor(u => u.UserName, null, new { @class = "text-danger" })
+        </div>
+        <div class="input-group mb-3">
+            @Html.PasswordFor(u => u.Password, new { @class = "form-control text-light w-auto", @placeholder = "Mật khẩu", @style = "background-color: #222831;" })
+            @Html.ValidationMessageFor(u => u.Password, null, new { @class = "text-danger" })
+        </div>
+        <div class="row">
+            <div class="col-7">
+                <div class="icheck-primary">
+                    @Html.CheckBoxFor(u => u.RememberMe)
+                    <label for="remember">
+                        Ghi nhớ mật khẩu
+                    </label>
+                </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-5">
+                <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+            </div>
+            <!-- /.col -->
+        </div>
+    }
+
+    <!-- /.social-auth-links -->
+
+    <p class="mb-1">
+        <a href="#">Quên mật khẩu?</a>
+    </p>
+    @*<p class="mb-0">
+            <a href="register.html" class="text-center">Register a new membership</a>
+        </p>*@
+</div>
+
